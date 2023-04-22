@@ -1,0 +1,43 @@
+{
+  "name": "wxapp_server",
+  "version": "1.0.0",
+  "description": "微信小程序原生云开发，官方调整运营策略，以前的免费额度通通取消，最低付费为19.9元/月😯，所以打算自建服务",
+  "main": "server.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=pro nodemon server.js",
+    "dev": "cross-env NODE_ENV=dev nodemon server.js"
+  },
+  "_moduleAliases": {
+    "@": "."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dacong-wu/wxapp_server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dacong-wu/wxapp_server/issues"
+  },
+  "homepage": "https://github.com/Dacong-wu/wxapp_server#readme",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "cross-env": "^7.0.3",
+    "dayjs": "^1.11.5",
+    "image-size": "^1.0.2",
+    "ioredis": "^5.2.3",
+    "jsonwebtoken": "^8.5.1",
+    "koa": "^2.13.4",
+    "koa-bodyparser": "^4.3.0",
+    "koa-router": "^12.0.0",
+    "log4js": "^6.6.1",
+    "mime-types": "^2.1.35",
+    "module-alias": "^2.2.2",
+    "mysql2": "^2.3.3",
+    "nanoid": "^3.3.4",
+    "node-schedule": "^2.1.0",
+    "nodemon": "^2.0.19",
+    "ua-parser-js": "^1.0.32"
+  }
+}
