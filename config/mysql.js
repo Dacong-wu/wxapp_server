@@ -3,12 +3,11 @@ const mysql = require('mysql2')
 const {envData} = require('@/env')
 
 const config = {
-  host: 'localhost',
+  host: process.env.AZURE_MYSQL_HOST,
   user: envData.MYSQL_USER,
-  port: '3306',
+  port: Number(process.env.AZURE_MYSQL_PORT),
   password: envData.MYSQL_PASS,
-  database: 'wx_cloud',
-  // timezone: '+08:00',
+  database: process.env.AZURE_MYSQL_DATABASE,
   dateStrings: true
 }
 const pool = mysql.createPool(config)

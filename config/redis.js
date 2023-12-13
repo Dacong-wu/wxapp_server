@@ -1,10 +1,5 @@
 const Redis = require('ioredis')
-const {envData} = require('@/env')
-
-const config = {
-  password: envData.REDIS_PASS
-}
-const redis = new Redis(config)
+const redis = new Redis(process.env.AZURE_REDIS_CONNECTIONSTRING)
 
 module.exports = {
   set: function (key, data, time) {
