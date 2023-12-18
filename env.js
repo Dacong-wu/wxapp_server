@@ -7,8 +7,8 @@ const envInfo = {
   JWT_SECRET: process.env.AZURE_JWT_SECRET, // jwt的秘钥
   AES_SECRET: process.env.AZURE_AES_SECRET, // aes加密的秘钥
   SERVER_API: process.env.AZURE_SERVER_API, // 图库应用
-  REDIS_URL: process.env.AZURE_REDIS_URL,
-  DB_LINK: process.env.AZURE_DB_LINK
+  REDIS_URL: process.env.AZURE_REDIS_URL,  // render中redis地址
+  DB_LINK: process.env.AZURE_DB_LINK // 使用mongodb官方的地址
 }
 
 const envData = envInfo
