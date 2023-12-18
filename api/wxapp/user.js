@@ -1,6 +1,5 @@
 // 用户相关的接口
 const router = require('koa-router')()
-const query = require('@/config/mysql')
 const { UserModel } = require('@/config/mongodb')
 
 // 1.获取开始时间，没有返回null
@@ -69,8 +68,6 @@ router.post('/addlover', async ctx => {
   var lover_openid = ctx.userOpenid
   await UserModel.findOneAndUpdate({ openid }, { lover_openid })
   await UserModel.findOneAndUpdate({ openid: lover_openid }, { $set: { lover_openid: openid, openid: lover_openid } }, { upsert: true })
-  var sql2 = `select begin_date from user where openid in ('${openid}','${lover_openid}')`
-  var d = await query(sql2)
   const result = await UserModel.find({ openid: { $in: [openid, lover_openid] } }, { begin_date: 1 }).lean()
   if (result[0].begin_date && result[1].begin_date) {
     if (result[0].begin_date > result[1].begin_date) {
