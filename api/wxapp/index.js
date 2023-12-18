@@ -2,17 +2,17 @@ const router = require('koa-router')()
 const user = require('./user')
 const diary = require('./diary')
 const home = require('./home')
-const query = require('@/config/mysql')
+const { UserModel } = require('@/config/mongodb')
 const redis = require('@/config/redis')
 
 router.use(async (ctx, next) => {
+  ctx.userOpenid = 'ofqPr4jMCe3WF5baCrFWfchVszng'
   var loverOpenid = await redis.get('loverOpenid' + ctx.userOpenid)
   var notHave = '暂无'
   if (loverOpenid && loverOpenid != notHave) {
     ctx.loverOpenid = loverOpenid
   } else {
-    var sql = `select lover_openid from user where openid = '${ctx.userOpenid}'`
-    var data = await query(sql)
+    const data = await UserModel.findOne({ openid: ctx.userOpenid })
     if (data.length > 0 && data[0].lover_openid) {
       redis.set('loverOpenid' + ctx.userOpenid, data[0].lover_openid, 86400 * 9) // 保存恋人id，保存时间为9天
       ctx.loverOpenid = data[0].lover_openid

@@ -6,7 +6,7 @@ const verifytoken = require('@/middlewares/verifyToken')
 
 router.use('/login', login)
 router.use('/upload', upload)
-router.use(verifytoken)
+// router.use(verifytoken)
 router.use('/wxapp', wxapp)
 
 module.exports = router

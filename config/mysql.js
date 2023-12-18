@@ -1,13 +1,13 @@
 //数据库相关的代码
 const mysql = require('mysql2')
-const {envData} = require('@/env')
+const { envData } = require('@/env')
 
 const config = {
-  host: process.env.AZURE_MYSQL_HOST,
+  host: envData.MYSQL_HOST,
   user: envData.MYSQL_USER,
-  port: Number(process.env.AZURE_MYSQL_PORT),
+  port: 3306,
   password: envData.MYSQL_PASS,
-  database: process.env.AZURE_MYSQL_DATABASE,
+  database: envData.MYSQL_DATABASE,
   dateStrings: true
 }
 const pool = mysql.createPool(config)

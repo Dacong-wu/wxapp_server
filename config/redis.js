@@ -1,5 +1,6 @@
 const Redis = require('ioredis')
-const redis = new Redis(process.env.AZURE_REDIS_CONNECTIONSTRING)
+const {envData} = require('@/env')
+const redis = new Redis(envData.REDIS_URL)
 
 module.exports = {
   set: function (key, data, time) {

@@ -1,14 +1,17 @@
 //日记相关的接口，需要token
 
 const router = require('koa-router')()
-const query = require('@/config/mysql')
-const { nanoid } = require('nanoid')
+const { ContentModel } = require('@/config/mongodb')
 
 // 分页获取日记
 router.get('/getdiarybypage', async ctx => {
-  var page = (ctx.query.page ? ctx.query.page - 1 : 0) * 20
-  let sql = `select * from content where create_user_openid in ('${ctx.userOpenid}','${ctx.loverOpenid}') order by create_date DESC limit ${page},20`
-  var data = await query(sql)
+  let page = (ctx.query.page ? ctx.query.page - 1 : 0) * 20
+  let data = await ContentModel.find({
+    create_user_openid: { $in: [ctx.userOpenid, ctx.loverOpenid] }
+  })
+    .sort({ create_date: -1 })
+    .skip(page * 20)
+    .limit(20)
   ctx.body = {
     code: 1,
     message: data
@@ -17,19 +20,20 @@ router.get('/getdiarybypage', async ctx => {
 
 // 添加日记
 router.post('/adddiary', async ctx => {
-  var id = nanoid(30)
   var create_user_openid = ctx.userOpenid
   var create_date = ctx.request.body.date
   var content = ctx.request.body.content
   var type = ctx.request.body.type
   if (create_date && content && type) {
-    var sql = `insert into content (id,create_user_openid,create_date,content,type) values ('${id}','${create_user_openid}','${create_date}','${content}','${type}')`
-    await query(sql)
-    let sql2 = `select * from content where id = '${id}'`
-    var d = await query(sql2)
+    let data = await ContentModel.create({
+      create_user_openid,
+      create_date,
+      content,
+      type
+    })
     ctx.body = {
       code: 1,
-      message: d[0]
+      message: data
     }
   } else {
     ctx.body = {
@@ -39,13 +43,14 @@ router.post('/adddiary', async ctx => {
   }
 })
 
-// 获取日记总是
+// 获取日记总数
 router.get('/getallnumber', async ctx => {
-  var sql = `select count(id) as sum from content where create_user_openid in ('${ctx.userOpenid}','${ctx.loverOpenid}')`
-  var d = await query(sql)
+  const count = await ContentModel.countDocuments({
+    create_user_openid: { $in: [ctx.userOpenid, ctx.loverOpenid] }
+  })
   ctx.body = {
     code: 1,
-    message: d.length > 0 ? d[0].sum : 0
+    message: count
   }
 })
 
@@ -55,8 +60,16 @@ router.post('/updatediary', async ctx => {
   var create_date = ctx.request.body.date
   var content = ctx.request.body.content
   var type = ctx.request.body.type
-  var sql = `update content set create_date = '${create_date}',content = '${content}',type='${type}' where id = '${id}'`
-  await query(sql)
+  await ContentModel.updateOne(
+    { _id, id }, // 条件，这里假设使用 id 作为条件
+    {
+      $set: {
+        create_date,
+        content,
+        type
+      }
+    }
+  )
   ctx.body = {
     code: 1,
     message: '更新成功'
