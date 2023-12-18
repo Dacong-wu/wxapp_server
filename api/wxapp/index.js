@@ -6,7 +6,6 @@ const { UserModel } = require('@/config/mongodb')
 const redis = require('@/config/redis')
 
 router.use(async (ctx, next) => {
-  ctx.userOpenid = 'ofqPr4jMCe3WF5baCrFWfchVszng'
   var loverOpenid = await redis.get('loverOpenid' + ctx.userOpenid)
   var notHave = '暂无'
   if (loverOpenid && loverOpenid != notHave) {
