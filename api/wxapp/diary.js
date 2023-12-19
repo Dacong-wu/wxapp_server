@@ -10,7 +10,7 @@ router.get('/getdiarybypage', async ctx => {
     create_user_openid: { $in: [ctx.userOpenid, ctx.loverOpenid] }
   })
     .sort({ create_date: -1 })
-    .skip(page * 20)
+    .skip(page)
     .limit(20)
   ctx.body = {
     code: 1,

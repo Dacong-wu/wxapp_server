@@ -5,7 +5,6 @@ const bodyParser = require('koa-bodyparser')
 const catchError = require('@/middlewares/catchError')
 const router = require('@/router')
 const { envData } = require('@/env')
-// const getAccessToken = require('./api/wxapp/getAccessToken')
 const app = new Koa({ proxy: true })
 
 app.listen(envData.BASE_PORT, '0.0.0.0', () => {
