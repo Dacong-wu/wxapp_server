@@ -12,9 +12,9 @@ router.use(async (ctx, next) => {
     ctx.loverOpenid = loverOpenid
   } else {
     const data = await UserModel.findOne({ openid: ctx.userOpenid })
-    if (data.length > 0 && data[0].lover_openid) {
-      redis.set('loverOpenid' + ctx.userOpenid, data[0].lover_openid, 86400 * 9) // 保存恋人id，保存时间为9天
-      ctx.loverOpenid = data[0].lover_openid
+    if (data && data.lover_openid) {
+      redis.set('loverOpenid' + ctx.userOpenid, data.lover_openid, 86400 * 9) // 保存恋人id，保存时间为9天
+      ctx.loverOpenid = data.lover_openid
     } else {
       redis.set('loverOpenid' + ctx.userOpenid, notHave, 86400) //保存一天，如果添加邀请恋人成功后，需要更新这条redis数据
     }
