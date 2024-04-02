@@ -1,5 +1,5 @@
 const crypto = require('crypto')
-const {envData} = require('@/env')
+const { envData } = require('../env')
 
 let secret = envData.AES_SECRET
 
@@ -35,7 +35,7 @@ function decryptByAes256(content, secretkey, iv) {
 }
 
 //aes加密
-const encrypt = data => {
+const encrypt = (data) => {
   try {
     var en_data = encryptByAes256(JSON.stringify(data), secret, secret)
     return en_data
@@ -45,7 +45,7 @@ const encrypt = data => {
   }
 }
 //aes解密
-const decrypt = data => {
+const decrypt = (data) => {
   try {
     const de_data = decryptByAes256(data, secret, secret)
     return JSON.parse(de_data)
@@ -57,5 +57,5 @@ const decrypt = data => {
 
 module.exports = {
   encrypt,
-  decrypt
+  decrypt,
 }

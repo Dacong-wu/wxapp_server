@@ -1,28 +1,10 @@
 const router = require('koa-router')()
-const axios = require('axios')
-const getData = require('@/middlewares/getData')
-const { envData } = require('@/env')
+const { putSignedUrl } = require('../../utils/bitiful')
 
-router.post('/avatar', getData, async ctx => {
-  var req = ctx.req
-  var p = new Promise((resolve, reject) => {
-    axios({
-      url: `${envData.SERVER_API}/upload/avatar`,
-      method: 'POST',
-      headers: {
-        'content-type': req.headers['content-type']
-      },
-      data: ctx.requestBody
-    })
-      .then(res => {
-        resolve(res.data)
-      })
-      .catch(err => {
-        reject(err)
-      })
-  })
-  var info = await p
-  ctx.body = info
+router.get('/signed-url', async ctx => {
+  let { Bucket, Key } = ctx.query
+  let url = await putSignedUrl(Bucket, Key)
+  ctx.body = url
 })
 
 module.exports = router.routes()
