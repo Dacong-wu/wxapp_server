@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
-const {envData} = require('@/env')
-const encrypt = require('@/utils/aes').encrypt
+const { envData } = require('../../env')
+const encrypt = require('../../utils/aes').encrypt
 
 module.exports = function (data, expiration_time) {
   var payload = {

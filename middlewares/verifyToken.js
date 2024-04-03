@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const {envData} = require('@/env')
+const {envData} = require('../env')
 const decrypt = require('../utils/aes').decrypt
 
 module.exports = async (ctx, next) => {

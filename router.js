@@ -1,8 +1,8 @@
 const router = require('koa-router')()
-const login = require('@/api/login/index')
-const wxapp = require('@/api/wxapp/index')
-const upload = require('@/api/upload/index')
-const verifytoken = require('@/middlewares/verifyToken')
+const login = require('./api/login/index')
+const wxapp = require('./api/wxapp/index')
+const upload = require('./api/upload/index')
+const verifytoken = require('./middlewares/verifyToken')
 
 router.use('/login', login)
 router.use(verifytoken)

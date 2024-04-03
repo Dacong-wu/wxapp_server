@@ -1,6 +1,6 @@
 // 用户相关的接口
 const router = require('koa-router')()
-const { UserModel } = require('@/config/mongodb')
+const { UserModel } = require('../../config/mongodb')
 
 // 1.获取开始时间，没有返回null
 router.get('/getbegindate', async ctx => {
@@ -83,6 +83,20 @@ router.post('/addlover', async ctx => {
   ctx.body = {
     code: 1,
     message: '成功加入'
+  }
+})
+
+// 7.设置头像昵称
+router.post('/update-avatar', async ctx => {
+  let { name, avatar } = ctx.request.body
+  let openid = ctx.request.body.openid
+  if (name && avatar) {
+    await UserModel.findOneAndUpdate({ openid }, { name, avatar })
+  } else {
+    ctx.body = {
+      code: 0,
+      message: '缺少昵称或头像信息'
+    }
   }
 })
 

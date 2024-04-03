@@ -2,8 +2,8 @@ const router = require('koa-router')()
 const user = require('./user')
 const diary = require('./diary')
 const home = require('./home')
-const { UserModel } = require('@/config/mongodb')
-const redis = require('@/config/redis')
+const { UserModel } = require('../../config/mongodb')
+const redis = require('../../config/redis')
 
 router.use(async (ctx, next) => {
   var loverOpenid = await redis.get('loverOpenid' + ctx.userOpenid)

@@ -1,4 +1,4 @@
-const log4j = require('@/utils/log4j')
+const log4j = require('../utils/log4j')
 const parser = require('ua-parser-js')
 
 module.exports = async (ctx, next) => {

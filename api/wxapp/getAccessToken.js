@@ -1,7 +1,7 @@
 const schedule = require('node-schedule')
-const redis = require('@/config/redis')
+const redis = require('../../config/redis')
 const axios = require('axios')
-const {envData} = require('@/env')
+const { envData } = require('../../env')
 const wxApi = require('./api')
 
 const getAccessToken = async function () {

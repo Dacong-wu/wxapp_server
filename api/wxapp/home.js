@@ -1,7 +1,7 @@
 // 首页相关的接口
 
 const router = require('koa-router')()
-const { PublicModel, MemoryModel } = require('@/config/mongodb')
+const { PublicModel, MemoryModel } = require('../../config/mongodb')
 
 // 获取首页banner图
 router.get('/getbanner', async ctx => {

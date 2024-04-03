@@ -5,6 +5,7 @@ const {
   GetObjectCommand,
 } = require('@aws-sdk/client-s3')
 const { getSignedUrl } = require('@aws-sdk/s3-request-presigner')
+
 const s3Client = new S3Client({
   region: 'cn-east-1', //桶信息中的服务可用区
   endpoint: 'https://s3.bitiful.net', //桶信息中的服务端点
@@ -30,6 +31,7 @@ function putSignedUrl(Bucket, Key) {
       })
   })
 }
+
 function getSignedUrl(Bucket, Key) {
   const putCmd = new GetObjectCommand({
     Bucket, //桶名称

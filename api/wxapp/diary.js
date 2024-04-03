@@ -1,7 +1,7 @@
 //日记相关的接口，需要token
 
 const router = require('koa-router')()
-const { ContentModel } = require('@/config/mongodb')
+const { ContentModel } = require('../../config/mongodb')
 
 // 分页获取日记
 router.get('/getdiarybypage', async ctx => {

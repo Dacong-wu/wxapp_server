@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
-const { ContentSchema, MemorySchema, PublicSchema, UserSchema } = require('@/utils/mongodbSchema')
-const { envData } = require('@/env')
+const { ContentSchema, MemorySchema, PublicSchema, UserSchema } = require('../utils/mongodbSchema')
+const { envData } = require('../env')
 
 mongoose.connect(envData.DB_LINK)
 const ContentModel = mongoose.model('Content', ContentSchema)
