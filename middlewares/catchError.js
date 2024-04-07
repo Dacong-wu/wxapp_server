@@ -1,5 +1,7 @@
 const log4j = require('../utils/log4j')
 const parser = require('ua-parser-js')
+const axios = require('axios')
+const { envData } = require('../env')
 
 module.exports = async (ctx, next) => {
   try {
@@ -15,6 +17,8 @@ module.exports = async (ctx, next) => {
       ctx.status = err.status
     } else {
       logError(ctx, end, err)
+      let content = `/服务出错/${err.stack}?group=以后的路一起走&icon=https://picture.ll1025.cn/avatar/yaya-5.webp`
+      await axios(`${envData.BARK_URL}${content}`)
       ctx.body = {
         code: 0,
         errcode: err.message ? err.message : ctx.url,
