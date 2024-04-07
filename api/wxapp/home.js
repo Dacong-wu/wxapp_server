@@ -1,26 +1,32 @@
 // 首页相关的接口
 
 const router = require('koa-router')()
-const query = require('@/config/mysql')
+const { PublicModel, MemoryModel } = require('../../config/mongodb')
 
 // 获取首页banner图
 router.get('/getbanner', async ctx => {
-  var sql = `SELECT content as url FROM public WHERE is_del = 0  and type = 1 order by create_time DESC`
-  var data = await query(sql)
-  var arr = []
-  data.forEach(element => {
-    arr.push(element.url)
+  const results = await PublicModel.find(
+    { is_del: 0, type: 1 } // 查询条件
+  )
+    .sort({ create_time: -1 }) // 排序，按 create_time 降序排列
+    .exec()
+  let data = results.map(item => {
+    return item.content
   })
   ctx.body = {
     code: 1,
-    message: arr
+    message: data
   }
 })
 
 // 获取纪念图片列表
 router.get('/getmemory', async ctx => {
-  var sql = `select id,content as banner from public where is_del = 0 and type = 2 order by create_time DESC`
-  var data = await query(sql)
+  const data = await PublicModel.find(
+    { is_del: 0, type: 2 }, // 查询条件
+    { banner: '$content' } // 投影，指定返回的字段和字段重命名
+  )
+    .sort({ create_time: -1 }) // 排序，按 create_time 降序排列
+    .exec()
   ctx.body = {
     code: 1,
     message: data
@@ -30,11 +36,11 @@ router.get('/getmemory', async ctx => {
 // 获取纪念的详情
 router.get('/getmemoryinfo', async ctx => {
   var id = ctx.query.id ? ctx.query.id : ''
-  var sql = `select * from memory_page where memory_id = '${id}'`
-  var data = await query(sql)
+  const results = await MemoryModel.findById(id).lean()
+  results.memory_id = results._id
   ctx.body = {
     code: 1,
-    message: data[0]
+    message: results
   }
 })
 module.exports = router.routes()

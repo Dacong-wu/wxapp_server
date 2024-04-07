@@ -1,8 +1,9 @@
 const router = require('koa-router')()
 const axios = require('axios')
-const {envData} = require('@/env')
-const wxApi = require('@/api/wxapp/api')
+const { envData } = require('../../env')
+const wxApi = require('../wxapp/api')
 const signToken = require('./signToken')
+
 router.post('/wxapplogin', async ctx => {
   var code = ctx.request.body.code //微信小程序获取到的code
   if (code) {

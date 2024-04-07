@@ -1,10 +1,10 @@
 const Redis = require('ioredis')
-const {envData} = require('@/env')
-
-const config = {
-  password: envData.REDIS_PASS
-}
-const redis = new Redis(config)
+const { envData } = require('../env')
+const redis = new Redis({
+  host: envData.REDIS_HOST,
+  password: envData.REDIS_PASS,
+  db: 1
+})
 
 module.exports = {
   set: function (key, data, time) {
