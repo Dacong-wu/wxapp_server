@@ -4,7 +4,10 @@ const { getPutObjectSignedUrl } = require('../../utils/bitiful')
 router.get('/signed-url', async ctx => {
   let { Bucket, Key } = ctx.query
   let url = await getPutObjectSignedUrl(Bucket, Key)
-  ctx.body = url
+  ctx.body = {
+    code: 1,
+    message: url
+  }
 })
 
 module.exports = router.routes()
