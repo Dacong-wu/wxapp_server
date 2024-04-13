@@ -57,7 +57,7 @@ router.get('/getloverinfo', async ctx => {
   )
   let userInfo = await UserModel.findOne({
     openid: loverUser?.lover_openid,
-  }).select('name avatar')
+  }).select('name avatar lover_page')
   ctx.body = {
     code: 1,
     message: userInfo,
