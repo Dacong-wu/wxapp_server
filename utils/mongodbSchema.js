@@ -7,15 +7,15 @@ const ContentSchema = new mongoose.Schema(
     create_date: {
       type: Date,
       default: Date.now,
-      get: t => dayjs(t).format('YYYY/MM/DD')
+      get: t => dayjs(t).format('YYYY/MM/DD'),
     },
     content: { type: String, default: '' },
-    type: { type: String, default: '' }
+    type: { type: String, default: '' },
   },
   {
     versionKey: false,
     toJSON: { getters: true, virtuals: true },
-    toObject: { getters: true }
+    toObject: { getters: true },
   }
 )
 
@@ -29,12 +29,12 @@ const MemorySchema = new mongoose.Schema(
     music_epname: { type: String, default: '' },
     music_singer: { type: String, default: '' },
     music_coverImgUrl: { type: String, default: '' },
-    music_webUrl: { type: String, default: '' }
+    music_webUrl: { type: String, default: '' },
   },
   {
     versionKey: false,
     toJSON: { getters: true, virtuals: true },
-    toObject: { getters: true }
+    toObject: { getters: true },
   }
 )
 
@@ -46,13 +46,13 @@ const PublicSchema = new mongoose.Schema(
     create_time: {
       type: Date,
       default: Date.now,
-      get: t => dayjs(t).format('YYYY/MM/DD HH:mm:ss')
-    }
+      get: t => dayjs(t).format('YYYY/MM/DD HH:mm:ss'),
+    },
   },
   {
     versionKey: false,
     toJSON: { getters: true, virtuals: true },
-    toObject: { getters: true }
+    toObject: { getters: true },
   }
 )
 
@@ -62,22 +62,26 @@ const UserSchema = new mongoose.Schema(
     create_date: {
       type: Date,
       default: Date.now,
-      get: t => dayjs(t).format('YYYY/MM/DD')
+      get: t => dayjs(t).format('YYYY/MM/DD'),
     },
     avatar: { type: String, default: '' },
     lover_openid: { type: String, default: '' },
+    lover_page: {
+      title: { type: String, default: '' },
+      back: { type: String, default: '' },
+    },
     name: { type: String, default: '' },
     begin_date: {
       type: Date,
       default: Date.now,
-      get: t => dayjs(t).format('YYYY/MM/DD')
+      get: t => dayjs(t).format('YYYY/MM/DD'),
     },
-    type: { type: String, default: 'user' }
+    type: { type: String, default: 'user' },
   },
   {
     versionKey: false,
     toJSON: { getters: true, virtuals: true },
-    toObject: { getters: true }
+    toObject: { getters: true },
   }
 )
 
