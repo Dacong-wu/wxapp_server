@@ -4,8 +4,8 @@
   "description": "微信小程序原生云开发，官方调整运营策略，以前的免费额度通通取消，最低付费为19.9元/月😯，所以打算自建服务",
   "main": "server.js",
   "scripts": {
-    "start": "node --env-file=.env server.js",
-    "dev": "nodemon server.js"
+    "start": "nodemon --env-file=.env server.js",
+    "dev": "nodemon --env-file=.env.dev server.js"
   },
   "repository": {
     "type": "git",
