@@ -1,6 +1,7 @@
 // 用户相关的接口
 const router = require('koa-router')()
 const { UserModel } = require('../../config/mongodb')
+const { updateSignedUrl } = require('../../utils/bitiful')
 
 // 1.获取开始时间，没有返回null
 router.get('/getbegindate', async ctx => {
@@ -58,6 +59,10 @@ router.get('/getloverinfo', async ctx => {
   let userInfo = await UserModel.findOne({
     openid: loverUser?.lover_openid,
   }).select('name avatar lover_page')
+  if (userInfo.lover_page.back) {
+    let newUrl = await updateSignedUrl(userInfo.lover_page.back)
+    if (newUrl) userInfo.lover_page.back = newUrl
+  }
   ctx.body = {
     code: 1,
     message: userInfo,
@@ -131,6 +136,28 @@ router.post('/update-avatar', async ctx => {
     ctx.body = {
       code: 0,
       message: '缺少昵称或头像信息',
+    }
+  }
+})
+
+// 8.设置小可爱的标题和背景
+router.post('/update-lover-info', async ctx => {
+  let { title, back, _id } = ctx.request.body
+  if (title && back && _id) {
+    await UserModel.findOneAndUpdate(
+      { _id },
+      {
+        $set: { 'lover_page.back': back, 'lover_page.title': title },
+      }
+    )
+    ctx.body = {
+      code: 1,
+      message: '更新成功',
+    }
+  } else {
+    ctx.body = {
+      code: 0,
+      message: '缺少标题或背景信息',
     }
   }
 })
