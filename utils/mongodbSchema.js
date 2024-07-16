@@ -42,6 +42,7 @@ const PublicSchema = new mongoose.Schema(
   {
     type: { type: Number, default: 1 },
     content: { type: String, default: '' },
+    content_id: { type: String, default: '' },
     is_del: { type: Boolean, default: false },
     create_time: {
       type: Date,
