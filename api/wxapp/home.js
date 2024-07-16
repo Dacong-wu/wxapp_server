@@ -23,7 +23,7 @@ router.get('/getbanner', async ctx => {
 router.get('/getmemory', async ctx => {
   const data = await PublicModel.find(
     { is_del: 0, type: 2 }, // 查询条件
-    { banner: '$content' } // 投影，指定返回的字段和字段重命名
+    { banner: '$content', contentId: '$content_id' } // 投影，指定返回的字段和字段重命名
   )
     .sort({ create_time: -1 }) // 排序，按 create_time 降序排列
     .exec()
